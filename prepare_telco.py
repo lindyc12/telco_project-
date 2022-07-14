@@ -35,16 +35,6 @@ import acquire
 
 # In[ ]:
 
-def split_telco_data(df):
-
-    train_validate, test = train_test_split(df, test_size=.2, 
-                                        random_state=123, 
-                                        stratify=df.churn)
-    train, validate = train_test_split(train_validate, test_size=.2, 
-                                   random_state=123, 
-                                   stratify=train_validate.churn)
-    return train, validate, test
-
 
 
 # In[4]:
@@ -52,7 +42,7 @@ def split_telco_data(df):
 
 def prep_telco_data(df):
     # Drop duplicate columns
-    df.drop(columns=['payment_type_id', 'internet_service_type_id', 'contract_type_id', 'customer_id'], inplace=True)
+    df.drop(columns=['payment_type_id', 'internet_service_type_id', 'contract_type_id'], inplace=True)
        
     # Drop null values  
     df['total_charges'] = df['total_charges'].str.strip()
@@ -79,7 +69,8 @@ def prep_telco_data(df):
                               'streaming_movies', \
                               'contract_type', \
                               'internet_service_type', \
-                              'payment_type']], dummy_na=False, \
+                              'payment_type', \
+                              'gender']], dummy_na=False, \
                               drop_first=True)
     
     # Concat dummy dataframe to original 
@@ -93,12 +84,23 @@ def prep_telco_data(df):
 
 
 # In[5]:
+#### split data 
+def split_telco_data(df):
+
+    train_validate, test = train_test_split(df, test_size=.2, 
+                                        random_state=123, 
+                                        stratify=df.churn)
+    train, validate = train_test_split(train_validate, test_size=.2, 
+                                   random_state=123, 
+                                   stratify=train_validate.churn)
+    return train, validate, test
 
 
 
 
 # In[ ]:
 
+#### split more 
 
 
 
